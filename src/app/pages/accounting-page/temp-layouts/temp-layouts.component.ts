@@ -6,6 +6,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
 import {objectScan} from 'object-scan';
 import { userInfo } from '../user';
+import { FormBuilder, FormArray, FormGroup, FormControl } from '@angular/forms';
+
 @Component({
   selector: 'ngx-temp-layouts',
   styleUrls: ['./temp-layouts.component.scss'],
@@ -25,6 +27,9 @@ export class TempLayoutsComponent {
     "balance": 0,
     "lastOpreationAt": "last opreation at"
   };
+  opreationTypes = ["charge" ,"payment" ,"sales"];
+  move_line_steps: FormGroup;
+ 
    opreationAmount:number = 0;
    opreationByBankTransactionId:string = "";
    opreationSourceAccount :string = "";
@@ -32,7 +37,13 @@ export class TempLayoutsComponent {
   @ViewChild('autoInput') input;
    search = "";
 
-  constructor(private _http:HttpClient ,private _notificationService:NbToastrService){}
+  constructor(private _http:HttpClient ,private _notificationService:NbToastrService ,private fb:FormBuilder)
+  {
+    this.move_line_steps = this.fb.group({
+   
+      moves: this.fb.array([new FormControl(null)])
+   });
+  }
 
   private filter(value: string): string[] {
     const filterValue = value.toLowerCase();
@@ -122,5 +133,40 @@ export class TempLayoutsComponent {
     //set disabled form
   }
 
+  selectSourceAccount($event)
+  {
+    
+    console.log("source account = "+$event)
+    this.opreationSourceAccount = $event;
+  }
 
+  // move line functions
+
+  addStep()
+  {
+    
+      const op = this.fb.array([
+      
+        new FormControl('op_type',),
+        new FormControl('op_amount'),
+        new FormControl('op_sales_account'),
+      ]);
+      
+      this.moves.push(this.moves.value);
+      // console.log(moves.value);
+  }
+
+  removeStep(index)
+  {
+    this.moves.removeAt(index)
+  }
+
+  get moves() : FormArray {
+    return this.move_line_steps.get("moves") as FormArray
+  }
+
+  saveSteps()
+  {
+    console.log(this.move_line_steps.value)
+  }
 }

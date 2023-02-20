@@ -10,7 +10,7 @@ import {
   NbSelectModule,
   NbUserModule,
 } from '@nebular/theme';
-
+import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 import { ThemeModule } from '../../@theme/theme.module';
 import { AccountingRoutingModule } from './accounting-routing.module';
 import { TempLayoutsComponent } from './temp-layouts/temp-layouts.component';
@@ -29,6 +29,8 @@ import { NbAutocompleteModule } from '@nebular/theme';
     NbRadioModule,
     NbAutocompleteModule,
     AccountingRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
     NbDatepickerModule,
     NbSelectModule,
     NbIconModule,
