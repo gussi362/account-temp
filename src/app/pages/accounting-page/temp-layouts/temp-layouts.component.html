@@ -13,7 +13,7 @@
             #search
             placeholder="search using code or name"
             [nbAutocomplete]="auto" />
-            <nb-autocomplete #auto (selectedChange)="onSelectionChange($event)">
+            <nb-autocomplete #auto (selectedChange)="onUserSearchSelect($event)">
 
               <nb-option *ngFor="let option of filteredOptions$ | async" [value]="option.key">
                 <!-- {{ option }} -->
@@ -24,32 +24,33 @@
             </nb-autocomplete>
           </div>
 
+          <!-- start user data info -->
           <div class="form-inline">
             <div class="form-group">
               <label for="searchCode" class="label">Code</label>
-              <input type="text" disabled nbInput fullWidth id="searchCode" placeholder="code">
+              <input type="text" disabled nbInput [value]="userData!.code" fullWidth id="searchCode" placeholder="code">
             </div>
             <div class="form-group">
               <label for="searchAccountType" class="label">Account Type</label>
-              <input type="text" disabled nbInput fullWidth id="searchAccountType" placeholder="type">
+              <input type="text" disabled nbInput [value]="userData!.accountType" fullWidth id="searchAccountType" placeholder="type">
             </div>
             <div class="form-group">
               <label for="searchBalance" class="label">Balance</label>
-              <input type="text" disabled nbInput fullWidth id="searchBalance" placeholder="type">
+              <input type="text" disabled nbInput [value]="userData!.balance" fullWidth id="searchBalance" placeholder="type">
             </div>
           </div>
           <div class="form-inline">
             <div class="form-group">
               <label for="searchCode" class="label">Name</label>
-              <input type="text" disabled nbInput fullWidth id="searchCode" placeholder="code">
+              <input type="text" disabled nbInput [value]="userData!.name" fullWidth id="searchCode" placeholder="code">
             </div>
             <div class="form-group">
-              <label for="searchAccountType" class="label">Phone</label>
-              <input type="text" disabled nbInput fullWidth id="searchAccountType" placeholder="type">
+              <label for="searchAccountType"  class="label">Phone</label>
+              <input type="text" disabled nbInput [value]="userData!.phone" fullWidth id="searchAccountType" placeholder="type">
             </div>
             <div class="form-group">
               <label for="searchBalance" class="label">Last opreation at</label>
-              <input type="text" disabled nbInput fullWidth id="searchBalance" placeholder="type">
+              <input type="text" disabled nbInput [value]="userData!.lastOpreationAt" fullWidth id="searchBalance" placeholder="type">
             </div>
 
             <div class="form-group">
@@ -57,7 +58,29 @@
 
             </div>
           </div>
+          <!-- end user data info -->
 
+        <div id="opreationDetails" class="form-inline">
+            <div class="form-group">
+              <label for="sourceAccount" class="label">Source Account</label>
+              <nb-select *ngFor="let sourceAccount of sourceAccounts " id="acckSources"  [(ngModel)]="opreationSourceAccount" [value]="sourceAccount">
+                
+                <nb-option>{{sourceAccount}}</nb-option>
+                
+              </nb-select>
+            </div>
+
+            <div class="form-group">
+              <label for="opreationAmount" class="label">Amount</label>
+              <input type="text"  nbInput [(ngModel)]="opreationAmount" fullWidth id="opreationAmount" placeholder="Amount">
+            </div>
+
+            <div class="form-group" *ngIf="opreationSourceAccount == 'Bank' " >
+              <label for="opreationByBankTransactionId" class="label">Transaction number</label>
+              <input type="text"  nbInput [(ngModel)]="opreationByBankTransactionId" fullWidth id="opreationByBankTransactionId" placeholder="Trx.Id">
+            </div>
+        </div>
+          
         <div class="form-inline">
 
           <input type="text" nbInput fullWidth placeholder="Jane Doe">
